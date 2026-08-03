@@ -14,7 +14,7 @@ function Login({siguiente}:Props){
 
     const validarUsuario = ()=>{
 
-        if(usuario === "joshuascoli@gmail.com"){
+        if(usuario === "joshuascoli@gmail.com" || usuario === "luismavalle82@gmail.com"){
 
             siguiente(usuario);
 

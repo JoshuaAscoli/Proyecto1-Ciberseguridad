@@ -19,8 +19,8 @@ function PIN({usuario, siguiente}:Props){
 
 
         if(
-            usuario==="joshuascoli@gmail.com" &&
-            pin==="1112"
+            (usuario==="joshuascoli@gmail.com" && pin==="1112") ||
+            (usuario==="luismavalle82@gmail.com" && pin==="1234")
         ){
 
             alert("PIN correcto");

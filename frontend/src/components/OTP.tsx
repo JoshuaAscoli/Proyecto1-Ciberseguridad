@@ -2,10 +2,11 @@ import { useState } from "react";
 import "../styles/login.css";
 
 interface Props{
+    usuario: string;
     siguiente:()=>void;
 }
 
-function OTP({siguiente}:Props){
+function OTP({usuario, siguiente}:Props){
 
     const [codigo,setCodigo] = useState("");
 
@@ -64,7 +65,7 @@ function OTP({siguiente}:Props){
                 </p>
 
                 <strong>
-                    joshuascoli@gmail.com
+                    {usuario}
                 </strong>
 
 

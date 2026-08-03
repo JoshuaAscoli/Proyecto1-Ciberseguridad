@@ -25,13 +25,15 @@ app.get("/", (req,res)=>{
 
 app.post("/enviar-otp", async(req,res)=>{
 
+    const {email} = req.body;
+
     codigoGenerado = Math.floor(100000 + Math.random()*900000);
 
     try{
 
         await transporter.sendMail({
             from:process.env.EMAIL,
-            to:"joshuascoli@gmail.com",
+            to: email,
             subject:"Código de autenticación",
             text:`Tu código OTP es: ${codigoGenerado}`
         });

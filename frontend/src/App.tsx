@@ -3,6 +3,7 @@ import Login from "./components/Login";
 import PIN from "./components/Pin";
 import OTP from "./components/OTP";
 import Biometria from "./components/Biometria";
+import Autorizacion from "./components/Autorizacion";
 
 
 function App(){
@@ -18,7 +19,9 @@ function App(){
       const respuesta = await fetch(
         "http://localhost:3000/enviar-otp",
         {
-          method:"POST"
+          method:"POST",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify({ email: usuario })
         }
       );
 
@@ -84,6 +87,8 @@ function App(){
 
         <OTP
 
+          usuario={usuario}
+
           siguiente={()=>{
 
             setPantalla("biometria");
@@ -96,11 +101,32 @@ function App(){
         :
 
 
+        pantalla === "biometria" ?
+
         <Biometria
+
+          usuario={usuario}
 
           siguiente={()=>{
 
             setPantalla("autorizacion");
+
+          }}
+
+        />
+
+
+        :
+
+
+        <Autorizacion
+
+          usuario={usuario}
+
+          cerrarSesion={()=>{
+
+            setUsuario("");
+            setPantalla("login");
 
           }}
 
