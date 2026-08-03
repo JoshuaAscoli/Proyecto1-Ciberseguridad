@@ -185,8 +185,8 @@ function Biometria({ usuario, siguiente }: Props) {
         if (!referenciaLista && !errorReferencia) return { text: "📂 Procesando referencia...", color: "#f59e0b" };
         if (!camaraLista)                       return { text: "📷 Iniciando cámara...",       color: "#f59e0b" };
         if (validado)                           return { text: "✅ Identidad confirmada",       color: "#4ade80" };
-        if (validando)                          return { text: "🔍 Analizando identidad...",    color: "#60a5fa" };
-        if (!rostroDetectado)                   return { text: "👁️ Buscando rostro...",         color: "#f59e0b" };
+        if (validando)                          return { text: "Analizando identidad...",    color: "#60a5fa" };
+        if (!rostroDetectado)                   return { text: " Buscando rostro...",         color: "#f59e0b" };
         if (esLaPersona)                        return { text: `✅ Identidad verificada — ${similitud}% de similitud`, color: "#4ade80" };
         return                                         { text: `❌ Persona no reconocida — ${similitud}% de similitud`, color: "#f87171" };
 
@@ -203,7 +203,7 @@ function Biometria({ usuario, siguiente }: Props) {
 
             <div className="login-card">
 
-                <h1>📷 Verificación biométrica</h1>
+                <h1>Verificación biométrica</h1>
 
                 <p>Coloque su rostro frente a la cámara</p>
 
@@ -267,7 +267,7 @@ function Biometria({ usuario, siguiente }: Props) {
                         disabled={!puedeValidar}
                         style={!puedeValidar ? { opacity: 0.4, cursor: "not-allowed" } : {}}
                     >
-                        🔍 Validar identidad
+                         Validar identidad
                     </button>
 
                 )}

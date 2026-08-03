@@ -1,16 +1,15 @@
 import { useState } from "react";
 import "../styles/login.css";
 
-
 interface Props{
     siguiente:(usuario:string)=>void;
 }
 
-
 function Login({siguiente}:Props){
 
     const [usuario,setUsuario] = useState("");
-
+    const [error,setError] = useState(false);
+    const [bloqueado,setBloqueado] = useState(false);
 
     const validarUsuario = ()=>{
 
@@ -20,7 +19,16 @@ function Login({siguiente}:Props){
 
         }else{
 
-            alert("Usuario no existe");
+            setError(true);
+            setBloqueado(true);
+            setUsuario("");
+
+            setTimeout(()=>{
+
+                setError(false);
+                setBloqueado(false);
+
+            },2000);
 
         }
 
@@ -33,22 +41,30 @@ function Login({siguiente}:Props){
 
             <div className="login-card">
 
-                <h1>Login Seguro</h1>
+                <h1>Login</h1>
 
                 <p>Identificación del usuario</p>
 
-                <input
-                    type="text"
-                    placeholder="Usuario"
-                    value={usuario}
-                    onChange={(e)=>setUsuario(e.target.value)}
-                />
+                <div className="input-container">
+
+                    <input
+                        className={error ? "input-error" : ""}
+                        type="text"
+                        placeholder="Correo electrónico"
+                        value={usuario}
+                        disabled={bloqueado}
+                        onChange={(e)=>setUsuario(e.target.value)}
+                    />
 
 
-                <button onClick={validarUsuario}>
+                </div>
+
+                <button
+                    onClick={validarUsuario}
+                    disabled={bloqueado}
+                >
                     Continuar
                 </button>
-
 
             </div>
 
@@ -57,6 +73,5 @@ function Login({siguiente}:Props){
     );
 
 }
-
 
 export default Login;

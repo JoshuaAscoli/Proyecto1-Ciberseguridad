@@ -4,35 +4,91 @@ import "../styles/login.css";
 interface Props {
     usuario:string;
     siguiente:()=>void;
+    cerrarSesion:()=>void;
 }
 
 
-function PIN({usuario, siguiente}:Props){
+function PIN({usuario, siguiente, cerrarSesion}:Props){
 
     const [pin,setPin] = useState("");
+    const [error,setError] = useState(false);
+    
 
 
-    const validarPIN = ()=>{
 
-        console.log("Usuario recibido:", usuario);
-        console.log("PIN ingresado:", pin);
+    const validarPIN = async()=>{
+
+        try{
 
 
-        if(
-            (usuario==="joshuascoli@gmail.com" && pin==="1112") ||
-            (usuario==="luismavalle82@gmail.com" && pin==="1234")
-        ){
+            const respuesta = await fetch(
+                "http://localhost:3000/validar-pin",
+                {
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify({
+                        pin:pin,
+                        email:usuario
+                    })
+                }
+            );
 
-            alert("PIN correcto");
-            siguiente();
 
-        }else{
 
-            alert("PIN incorrecto");
+            const data = await respuesta.json();
+
+
+
+            if(data.valido){
+
+
+                siguiente();
+
+
+            }else{
+                if(data.cerrarSesion){
+
+        cerrarSesion();
+
+        return;
+
+    }
+
+
+                setError(true);
+
+                
+
+                setPin("");
+
+
+
+                setTimeout(()=>{
+
+                    setError(false);
+                    
+
+                },2000);
+
+
+            }
+
+
+
+        }catch(error){
+
+            console.log(
+                "Error conectando backend:",
+                error
+            );
 
         }
 
-    }
+
+    };
+
 
 
     return(
@@ -43,24 +99,49 @@ function PIN({usuario, siguiente}:Props){
 
                 <h1>Validación PIN</h1>
 
+
                 <p>
                     Usuario: {usuario}
                 </p>
 
 
+
                 <input
+
+                    className={error ? "input-error" : ""}
+
                     type="password"
+
                     inputMode="numeric"
+
                     maxLength={4}
+
                     placeholder="Ingrese PIN"
+
                     value={pin}
+
                     onChange={(e)=>setPin(e.target.value)}
+
                 />
 
 
-                <button onClick={validarPIN}>
+
+                <button
+                    onClick={validarPIN}
+                >
                     Continuar
                 </button>
+
+
+
+                {
+                    
+
+                        
+
+                    
+                }
+
 
 
             </div>

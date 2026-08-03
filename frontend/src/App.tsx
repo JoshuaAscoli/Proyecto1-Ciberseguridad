@@ -11,6 +11,14 @@ function App(){
   const [pantalla, setPantalla] = useState("login");
   const [usuario, setUsuario] = useState("");
 
+  const cerrarSesion = ()=>{
+
+    setUsuario("");
+
+    setPantalla("login");
+
+};
+
 
   const enviarOTP = async()=>{
 
@@ -68,6 +76,7 @@ function App(){
         <PIN
 
           usuario={usuario}
+          cerrarSesion={cerrarSesion}
 
           siguiente={()=>{
 
@@ -88,6 +97,7 @@ function App(){
         <OTP
 
           usuario={usuario}
+          cerrarSesion={cerrarSesion}
 
           siguiente={()=>{
 
@@ -123,12 +133,7 @@ function App(){
 
           usuario={usuario}
 
-          cerrarSesion={()=>{
-
-            setUsuario("");
-            setPantalla("login");
-
-          }}
+          cerrarSesion={cerrarSesion}
 
         />
 

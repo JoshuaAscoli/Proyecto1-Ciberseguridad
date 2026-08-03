@@ -71,7 +71,7 @@ function Autorizacion({ usuario, cerrarSesion }: Props) {
                     onClick={cerrarSesion}
                     style={{ background: "#dc2626" }}
                 >
-                    🔒 Cerrar sesión
+                   Cerrar sesión
                 </button>
 
             </div>

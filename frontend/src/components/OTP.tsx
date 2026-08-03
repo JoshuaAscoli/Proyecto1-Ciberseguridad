@@ -4,11 +4,15 @@ import "../styles/login.css";
 interface Props{
     usuario: string;
     siguiente:()=>void;
+    cerrarSesion:()=>void;
 }
 
-function OTP({usuario, siguiente}:Props){
+function OTP({usuario, siguiente, cerrarSesion}:Props){
 
     const [codigo,setCodigo] = useState("");
+    const [error,setError] = useState(false);
+    const [bloqueado,setBloqueado] = useState(false);
+
 
     const validarOTP = async()=>{
 
@@ -33,12 +37,26 @@ function OTP({usuario, siguiente}:Props){
 
             if(datos.valido){
 
-                alert("OTP correcto");
                 siguiente();
 
             }else{
+                if(datos.cerrarSesion){
 
-                alert("Código incorrecto");
+        cerrarSesion();
+        return;
+
+    }
+
+                setError(true);
+                setBloqueado(true);
+                setCodigo("");
+
+                setTimeout(()=>{
+
+                    setError(false);
+                    setBloqueado(false);
+
+                },2000);
 
             }
 
@@ -58,27 +76,27 @@ function OTP({usuario, siguiente}:Props){
 
             <div className="login-card">
 
-                <h1>📩 Verificación OTP</h1>
+                <h1>Verificación OTP</h1>
 
                 <p>
-                    Se envió un código a:
-                </p>
-
-                <strong>
-                    {usuario}
-                </strong>
+    Se envió un código a: <strong>{usuario}</strong></p>
 
 
                 <input
+                    className={error ? "input-error" : ""}
                     type="text"
                     placeholder="Ingrese código"
                     maxLength={6}
                     value={codigo}
+                    disabled={bloqueado}
                     onChange={(e)=>setCodigo(e.target.value)}
                 />
 
 
-                <button onClick={validarOTP}>
+                <button 
+                    onClick={validarOTP}
+                    disabled={bloqueado}
+                >
                     Verificar código
                 </button>
 
